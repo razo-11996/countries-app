@@ -1,0 +1,14 @@
+query Countries($filter: CountryFilterInput) {
+  countries(filter: $filter) {
+    code
+    name
+    native
+    emoji
+    capital
+    currency
+    continent {
+      code
+      name
+    }
+  }
+}

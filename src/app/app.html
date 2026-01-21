@@ -1,0 +1,79 @@
+<div class="min-h-dvh bg-[var(--app-bg)] text-[var(--app-fg)]">
+  <header
+    class="sticky top-0 z-10 border-b border-[var(--app-border)] bg-[var(--app-bg)]/80 backdrop-blur"
+  >
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+      <a class="flex items-center gap-3 font-semibold tracking-tight" routerLink="/">
+        <span
+          class="grid size-9 place-items-center rounded-xl bg-[var(--app-card)] shadow-sm ring-1 ring-[var(--app-border)]"
+        >
+          🌍
+        </span>
+        <span>Countries</span>
+      </a>
+
+      <div class="flex items-center gap-3">
+        <app-button
+          size="icon"
+          (click)="toggleTheme()"
+          [ariaPressed]="theme() === 'dark'"
+          [ariaLabel]="theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          @if (theme() === 'dark') {
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="size-5 text-[var(--app-fg)]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="M4.93 4.93l1.41 1.41" />
+              <path d="M17.66 17.66l1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="M4.93 19.07l1.41-1.41" />
+              <path d="M17.66 6.34l1.41-1.41" />
+            </svg>
+          } @else {
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              class="size-5 text-[var(--app-fg)]"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" />
+            </svg>
+          }
+        </app-button>
+      </div>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-4 py-6">
+    <router-outlet />
+  </main>
+
+  <footer class="border-t border-[var(--app-border)]">
+    <div class="mx-auto max-w-6xl px-4 py-6 text-sm text-[var(--app-muted)]">
+      Data source:
+      <a
+        class="underline underline-offset-4 hover:opacity-80"
+        [href]="countriesApiUrl"
+        target="_blank"
+        rel="noopener"
+      >
+        Countries GraphQL API
+      </a>
+    </div>
+  </footer>
+</div>

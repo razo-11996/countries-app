@@ -1,0 +1,14 @@
+overwrite: true
+schema: https://countries.trevorblades.com/graphql
+documents: 'src/app/graphql/operations/**/*.graphql'
+generates:
+  src/app/graphql/generated.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-apollo-angular
+    config:
+      gqlImport: apollo-angular#gql
+      addExplicitOverride: true
+      useTypeImports: true
+      strict: true

@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  color-scheme: light;
+
+  --app-bg: oklch(98% 0.01 250);
+  --app-fg: oklch(20% 0.02 250);
+  --app-muted: oklch(45% 0.03 250);
+  --app-border: color-mix(in oklch, var(--app-fg) 12%, transparent);
+  --app-card: oklch(100% 0 0);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --app-bg: oklch(18% 0.02 250);
+  --app-fg: oklch(96% 0.01 250);
+  --app-muted: oklch(72% 0.02 250);
+  --app-border: color-mix(in oklch, var(--app-fg) 14%, transparent);
+  --app-card: oklch(22% 0.02 250);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-fg);
+}
+
+/* Leaflet theming to match app tokens (light/dark). */
+.leaflet-container {
+  /* Keep the map light even in dark mode. */
+  background: #ffffff;
+  font: inherit;
+}
+
+.leaflet-control-attribution,
+.leaflet-control-zoom {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--app-fg) 12%, transparent);
+}
+
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.leaflet-control-attribution a {
+  color: inherit;
+}
+
+.leaflet-bar a {
+  background: #ffffff;
+  color: rgba(0, 0, 0, 0.85);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.leaflet-bar a:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.leaflet-bottom.leaflet-right {
+  display: none;
+}
