@@ -19,7 +19,7 @@ export function createApollo(httpLink: HttpLink, platformId: object): ApolloClie
         Country: { keyFields: ['code'] },
         Continent: { keyFields: ['code'] },
         Language: { keyFields: ['code'] },
-        State: { keyFields: ['code'] },
+        State: { keyFields: false },
       },
     }),
     ssrMode: isPlatformServer(platformId),

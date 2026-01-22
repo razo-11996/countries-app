@@ -7,7 +7,7 @@
 .app__header {
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 500;
   background-color: var(--app-bg);
   border-bottom: 1px solid var(--app-border);
   backdrop-filter: saturate(180%) blur(18px);

@@ -42,16 +42,18 @@ export class CountryDetailPage {
     { initialValue: { loading: true, error: null, current: null } },
   );
 
-  readonly languages = computed(() => {
-    const country = this.vm().country;
-    return (country?.languages ?? []).filter(Boolean);
-  });
-
-  readonly states = computed(() => {
-    const country = this.vm().country;
-    return (country?.states ?? []).filter(Boolean);
-  });
-
+  readonly languages = computed(
+    () =>
+      (this.vm().country?.languages ?? []).filter(Boolean) as NonNullable<
+        CountryVm['country']
+      >['languages'],
+  );
+  readonly states = computed(
+    () =>
+      (this.vm().country?.states ?? []).filter(Boolean) as NonNullable<
+        CountryVm['country']
+      >['states'],
+  );
   readonly skeleton = computed(() => Array.from({ length: 6 }, (_, i) => i));
 
   readonly windMeta = computed(() => {

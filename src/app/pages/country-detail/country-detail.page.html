@@ -353,8 +353,8 @@
         <div class="states">
           <div class="states__title">States</div>
           <div class="states__chips">
-            @for (s of states(); track s.code ?? s.name) {
-              <span class="badge">{{ s.name }}</span>
+            @for (s of states(); track $index) {
+              <span class="badge">{{ s.name ?? '—' }}</span>
             }
           </div>
         </div>
