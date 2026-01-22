@@ -1,3 +1,8 @@
+import {
+  toCompassDirection,
+  requiredUpperParam$,
+  weatherCodeToLabelAndIcon,
+} from '../../core/utils';
 import moment from 'moment';
 import { ActivatedRoute } from '@angular/router';
 import { shareReplay, switchMap } from 'rxjs/operators';
@@ -6,11 +11,6 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { LeafletMapComponent } from '../../ui/leaflet-map/leaflet-map.component';
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { CountriesRepository, CountryInsightsService, type CountryVm } from '../../core/data';
-import {
-  requiredUpperParam$,
-  toCompassDirection,
-  weatherCodeToLabelAndIcon,
-} from '../../core/utils';
 
 @Component({
   standalone: true,

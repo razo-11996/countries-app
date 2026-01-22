@@ -1,7 +1,7 @@
 import { NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import type { ButtonSize, ButtonVariant, NativeButtonType } from './button.types';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import type { ButtonSize, ButtonVariant, NativeButtonType } from './button.types';
 
 @Component({
   standalone: true,

@@ -7,20 +7,20 @@ import {
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs/operators';
+import {
+  effect,
+  inject,
+  signal,
+  computed,
+  Component,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { byNameAsc } from '../../core/utils';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import type { CountryCardModel } from '../../ui/country-card/country-card.types';
 import { CountryCardComponent } from '../../ui/country-card/country-card.component';
 import { CountriesRepository, type ContinentsVm, type CountriesVm } from '../../core/data';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
 
 @Component({
   standalone: true,
