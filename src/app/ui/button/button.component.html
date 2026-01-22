@@ -1,0 +1,11 @@
+<button
+  class="btn"
+  [type]="type()"
+  [disabled]="disabled()"
+  [routerLink]="routerLink() ?? null"
+  [attr.aria-label]="ariaLabel()"
+  [attr.aria-pressed]="ariaPressed()"
+  [ngClass]="['btn--' + variant(), 'btn--' + size(), extraClass()]"
+>
+  <ng-content></ng-content>
+</button>

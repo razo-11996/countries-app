@@ -9,35 +9,15 @@ import {
   PLATFORM_ID,
   AfterViewInit,
 } from '@angular/core';
-
 import { isPlatformBrowser } from '@angular/common';
 import type { LeafletModule } from './leaflet-map.types';
 import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-leaflet-map',
   standalone: true,
-  template: `
-    <div
-      class="overflow-hidden rounded-2xl bg-[var(--app-card)] shadow-sm ring-1 ring-[var(--app-border)]"
-    >
-      <div
-        class="flex items-center justify-between gap-3 border-b border-[var(--app-border)] px-4 py-3"
-      >
-        <div class="text-sm font-semibold tracking-tight">Map</div>
-        <a
-          class="text-sm text-[var(--app-muted)] underline underline-offset-4 hover:opacity-80"
-          [href]="openLink()"
-          target="_blank"
-          rel="noopener"
-        >
-          Open in OpenStreetMap
-        </a>
-      </div>
-
-      <div #container class="h-80 w-full bg-white"></div>
-    </div>
-  `,
+  selector: 'app-leaflet-map',
+  styleUrl: './leaflet-map.component.scss',
+  templateUrl: './leaflet-map.component.html',
 })
 export class LeafletMapComponent implements AfterViewInit, OnDestroy {
   private readonly platformId = inject(PLATFORM_ID);
@@ -98,7 +78,7 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
 
     this.tiles = this.createTilesLayer();
     this.tiles.options.attribution = '';
-  
+
     this.tiles.addTo(this.map);
 
     this.marker = L.circleMarker([this.lat(), this.lon()], {
@@ -111,10 +91,10 @@ export class LeafletMapComponent implements AfterViewInit, OnDestroy {
 
     const initialLat = clampWebMercatorLat(this.lat());
     const initialLon = clampLon(this.lon());
+
     this.marker.setLatLng([initialLat, initialLon]);
     this.map.setView([initialLat, initialLon], this.zoom());
 
-    const map = this.map;
     const recalc = () => {
       if (!this.map) return;
       const lat = clampWebMercatorLat(this.lat());

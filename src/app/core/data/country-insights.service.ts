@@ -1,25 +1,11 @@
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { catchError, map, shareReplay, startWith } from 'rxjs/operators';
-
-import { environment } from '../../../environments/environment';
 import type { Coordinates, CoordinatesVm, WeatherVm } from './country-insights.types';
-
-type RestCountriesResponseItem = {
-  latlng?: [number, number] | number[];
-};
-
-type OpenMeteoResponse = {
-  current_weather?: {
-    time: string;
-    temperature: number;
-    windspeed: number;
-    winddirection: number;
-    weathercode: number;
-  };
-};
+import type { OpenMeteoResponse, RestCountriesResponseItem } from './country-insights.api-types';
 
 @Injectable({ providedIn: 'root' })
 export class CountryInsightsService {
@@ -38,6 +24,7 @@ export class CountryInsightsService {
     }
 
     const cached = this.coordsCache.get(code);
+
     if (cached) return cached;
 
     const url =
@@ -64,6 +51,7 @@ export class CountryInsightsService {
     );
 
     this.coordsCache.set(code, req$);
+
     return req$;
   }
 
@@ -76,6 +64,7 @@ export class CountryInsightsService {
 
     const key = `${coords.lat.toFixed(4)},${coords.lon.toFixed(4)}`;
     const cached = this.weatherCache.get(key);
+
     if (cached) return cached;
 
     const url =
@@ -99,6 +88,7 @@ export class CountryInsightsService {
             windSpeedKmh: cw.windspeed,
             windDirectionDeg: cw.winddirection,
             weatherCode: cw.weathercode,
+            isDay: cw.is_day === 1,
           },
         } satisfies WeatherVm;
       }),
@@ -111,6 +101,7 @@ export class CountryInsightsService {
     );
 
     this.weatherCache.set(key, req$);
+
     return req$;
   }
 }

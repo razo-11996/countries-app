@@ -5,4 +5,3 @@ export function normalizeCountryCode(input: string | null | undefined): string {
 export function escapeRegexLiteral(input: string): string {
   return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
-

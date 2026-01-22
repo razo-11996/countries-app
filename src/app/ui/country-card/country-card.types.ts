@@ -6,4 +6,3 @@ export type CountryCardModel = {
   currency?: string | null;
   continent?: { name: string } | null;
 };
-

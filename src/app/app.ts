@@ -10,7 +10,7 @@ type Theme = 'light' | 'dark';
   selector: 'app-root',
   imports: [RouterLink, RouterOutlet, ButtonComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
 })
 export class App {
   private readonly platformId = inject(PLATFORM_ID);

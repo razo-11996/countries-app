@@ -1,0 +1,82 @@
+<section class="countries-page">
+  <header class="countries-page__header">
+    <div>
+      <h1>Countries</h1>
+      <p class="text-muted">Browse and inspect country details via GraphQL.</p>
+    </div>
+
+    <div class="countries-page__filters">
+      <label class="form-field">
+        <span class="form-field__label">Search</span>
+        <input
+          #searchInput
+          class="form-field__control"
+          [value]="search()"
+          (input)="search.set(searchInput.value)"
+          placeholder="Name or code…"
+        />
+      </label>
+
+      <label class="form-field">
+        <span class="form-field__label">Continent</span>
+        <select
+          #continentSelect
+          class="form-field__control"
+          [value]="continentCode()"
+          (change)="continentCode.set(continentSelect.value)"
+        >
+          <option value="">All</option>
+          @for (c of continents(); track c.code) {
+            <option [value]="c.code">{{ c.name }}</option>
+          }
+        </select>
+      </label>
+    </div>
+  </header>
+
+  @if (countriesVm().errors?.length) {
+    <div class="card message">
+      <div class="message__title">Something went wrong.</div>
+      <div class="message__body text-muted">
+        {{ countriesVm().errors?.[0]?.message ?? 'Unknown GraphQL error' }}
+      </div>
+    </div>
+  }
+
+  @if (countriesVm().loading && countriesVm().countries.length === 0) {
+    <div class="countries-grid">
+      @for (i of skeleton(); track i) {
+        <div class="card skeleton-card">
+          <div class="skeleton-card__top">
+            <div class="skeleton skeleton-card__avatar"></div>
+            <div class="skeleton-card__lines">
+              <div class="skeleton skeleton-card__line"></div>
+              <div class="skeleton skeleton-card__line skeleton-card__line--short"></div>
+            </div>
+          </div>
+          <div class="skeleton-card__facts">
+            <div class="skeleton skeleton-card__fact"></div>
+            <div class="skeleton skeleton-card__fact"></div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="countries-page__meta text-muted">
+      Showing <strong>{{ countries().length }}</strong>
+    </div>
+
+    @if (countries().length === 0) {
+      <div class="card message">
+        <div class="message__title">No results</div>
+        <div class="message__body text-muted">Try clearing your filters.</div>
+      </div>
+    } @else {
+      <div class="countries-grid">
+        @for (country of countries(); track country.code) {
+          <app-country-card [country]="country" />
+        }
+      </div>
+    }
+  }
+</section>

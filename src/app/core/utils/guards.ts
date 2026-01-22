@@ -12,4 +12,3 @@ export function getString(record: UnknownRecord, key: string): string | null {
   const v = record[key];
   return typeof v === 'string' ? v : null;
 }
-

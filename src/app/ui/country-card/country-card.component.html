@@ -1,0 +1,26 @@
+<a class="country-card card" [routerLink]="['/country', country().code]">
+  <div class="country-card__top">
+    <div class="country-card__title">
+      <div class="country-card__emoji" aria-hidden="true">{{ country().emoji }}</div>
+      <div class="country-card__name-wrap">
+        <div class="country-card__name">{{ country().name }}</div>
+        <div class="country-card__meta text-muted">
+          {{ country().code }} · {{ country().continent?.name ?? '—' }}
+        </div>
+      </div>
+    </div>
+
+    <span class="badge">View</span>
+  </div>
+
+  <dl class="country-card__facts">
+    <div>
+      <dt class="text-muted">Capital</dt>
+      <dd>{{ country().capital ?? '—' }}</dd>
+    </div>
+    <div>
+      <dt class="text-muted">Currency</dt>
+      <dd>{{ country().currency ?? '—' }}</dd>
+    </div>
+  </dl>
+</a>

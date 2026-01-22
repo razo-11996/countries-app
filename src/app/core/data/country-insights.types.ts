@@ -15,6 +15,6 @@ export type WeatherVm = {
     windSpeedKmh: number;
     windDirectionDeg: number;
     weatherCode: number;
+    isDay: boolean;
   } | null;
 };
-

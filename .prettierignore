@@ -1,0 +1,9 @@
+dist/
+node_modules/
+.angular/
+coverage/
+.npm-cache/
+
+# Large / generated / noisy
+package-lock.json
+src/app/graphql/generated.ts

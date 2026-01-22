@@ -1,0 +1,72 @@
+.btn {
+  gap: 0.5rem;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  display: inline-flex;
+  color: var(--app-fg);
+  border-radius: 0.75rem;
+  justify-content: center;
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--app-fg) 10%, transparent);
+  transition:
+    opacity 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 1px 2px color-mix(in oklch, var(--app-fg) 10%, transparent),
+      0 0 0 3px color-mix(in oklch, var(--app-fg) 22%, transparent);
+  }
+}
+
+.btn--md {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.btn--sm {
+  padding: 0.4rem 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.btn--icon {
+  padding: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.btn--primary {
+  background: var(--app-fg);
+  color: var(--app-bg);
+}
+
+.btn--ghost {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+
+  &:hover {
+    background: color-mix(in oklch, var(--app-fg) 8%, transparent);
+    opacity: 1;
+  }
+}
+
+.btn--surface {
+  background: var(--app-card);
+  color: var(--app-fg);
+}

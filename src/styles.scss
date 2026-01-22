@@ -1,0 +1,220 @@
+@import 'leaflet/dist/leaflet.css';
+
+:root {
+  color-scheme: light;
+
+  --app-bg: oklch(98% 0.01 250);
+  --app-fg: oklch(20% 0.02 250);
+  --app-muted: oklch(45% 0.03 250);
+  --app-card: oklch(100% 0 0);
+  --app-border: color-mix(in oklch, var(--app-fg) 12%, transparent);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --app-bg: oklch(18% 0.02 250);
+  --app-fg: oklch(96% 0.01 250);
+  --app-muted: oklch(72% 0.02 250);
+  --app-card: oklch(22% 0.02 250);
+  --app-border: color-mix(in oklch, var(--app-fg) 14%, transparent);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--app-fg);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    Apple Color Emoji,
+    Segoe UI Emoji;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--app-fg) 8%, transparent);
+}
+
+.text-muted {
+  color: var(--app-muted);
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.badge {
+  gap: 0.25rem;
+  line-height: 1;
+  font-weight: 500;
+  font-size: 0.75rem;
+  align-items: center;
+  display: inline-flex;
+  border-radius: 9999px;
+  padding: 0.25rem 0.6rem;
+  color: var(--app-muted);
+  background: var(--app-bg);
+  border: 1px solid var(--app-border);
+
+  svg {
+    flex: 0 0 auto;
+  }
+}
+
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.icon--muted {
+  color: var(--app-muted);
+}
+
+.message {
+  padding: 1rem;
+  font-size: 0.875rem;
+}
+
+.message__title {
+  font-weight: 600;
+}
+
+.message__body {
+  margin-top: 0.25rem;
+}
+
+.form-field {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.form-field__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--app-muted);
+}
+
+.form-field__control {
+  height: 2.75rem;
+  padding: 0 0.75rem;
+  font-size: 0.875rem;
+  color: var(--app-fg);
+  border-radius: 0.75rem;
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--app-fg) 10%, transparent);
+
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 1px 2px color-mix(in oklch, var(--app-fg) 10%, transparent),
+      0 0 0 3px color-mix(in oklch, var(--app-fg) 22%, transparent);
+  }
+}
+
+.skeleton {
+  background: var(--app-bg);
+  border-radius: 0.5rem;
+  animation: skeletonPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skeletonPulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.link {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.leaflet-container {
+  background: #ffffff;
+  font: inherit;
+}
+
+.leaflet-control-attribution,
+.leaflet-control-zoom {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--app-fg) 12%, transparent);
+}
+
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.92);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.leaflet-control-attribution a {
+  color: inherit;
+}
+
+.leaflet-bar a {
+  background: #ffffff;
+  color: rgba(0, 0, 0, 0.85);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.leaflet-bar a:hover {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.leaflet-bottom.leaflet-right {
+  display: none;
+}

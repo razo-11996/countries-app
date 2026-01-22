@@ -1,0 +1,60 @@
+.app {
+  min-height: 100dvh;
+  background: var(--app-bg);
+  color: var(--app-fg);
+}
+
+.app__header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--app-bg);
+  border-bottom: 1px solid var(--app-border);
+  backdrop-filter: saturate(180%) blur(18px);
+  -webkit-backdrop-filter: saturate(180%) blur(18px);
+  background-color: color-mix(in srgb, var(--app-bg) 80%, transparent);
+}
+
+.app__header-inner {
+  display: flex;
+  padding: 1rem 0;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.app__logo {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.75rem;
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  box-shadow: 0 1px 2px color-mix(in oklch, var(--app-fg) 10%, transparent);
+}
+
+.app__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.app__main {
+  padding: 1.5rem 0;
+}
+
+.app__footer {
+  border-top: 1px solid var(--app-border);
+  padding: 1.5rem 0;
+  font-size: 0.875rem;
+  color: var(--app-muted);
+}

@@ -13,119 +13,21 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import type { CountryCardModel } from '../../ui/country-card/country-card.types';
 import { CountryCardComponent } from '../../ui/country-card/country-card.component';
 import { CountriesRepository, type ContinentsVm, type CountriesVm } from '../../core/data';
-import { ChangeDetectionStrategy, Component, computed, effect, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  signal,
+} from '@angular/core';
 
 @Component({
   standalone: true,
   imports: [CountryCardComponent],
+  styleUrl: './countries.page.scss',
+  templateUrl: './countries.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: `
-    <section class="space-y-5">
-      <header class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 class="text-2xl font-semibold tracking-tight">Countries</h1>
-          <p class="mt-1 text-sm text-[var(--app-muted)]">
-            Browse and inspect country details via GraphQL.
-          </p>
-        </div>
-
-        <div class="grid gap-3 md:grid-cols-2">
-          <label class="grid gap-1">
-            <span class="text-xs font-medium text-[var(--app-muted)]">Search</span>
-            <input
-              #searchInput
-              class="h-11 w-full rounded-xl bg-[var(--app-card)] px-3 text-sm shadow-sm ring-1 ring-[var(--app-border)] placeholder:text-[var(--app-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--app-fg)]/40"
-              [value]="search()"
-              (input)="search.set(searchInput.value)"
-              placeholder="Name or code…"
-            />
-          </label>
-
-          <label class="grid gap-1">
-            <span class="text-xs font-medium text-[var(--app-muted)]">Continent</span>
-            <select
-              #continentSelect
-              class="h-11 w-full rounded-xl bg-[var(--app-card)] px-3 text-sm shadow-sm ring-1 ring-[var(--app-border)] focus:outline-none focus:ring-2 focus:ring-[var(--app-fg)]/40"
-              [value]="continentCode()"
-              (change)="continentCode.set(continentSelect.value)"
-            >
-              <option value="">All</option>
-              @for (c of continents(); track c.code) {
-                <option [value]="c.code">{{ c.name }}</option>
-              }
-            </select>
-          </label>
-        </div>
-      </header>
-
-      @if (countriesVm().errors?.length) {
-        <div
-          class="rounded-2xl bg-[var(--app-card)] p-4 text-sm shadow-sm ring-1 ring-[var(--app-border)]"
-        >
-          <div class="font-semibold">Something went wrong.</div>
-          <div class="mt-1 text-[var(--app-muted)]">
-            {{ countriesVm().errors?.[0]?.message ?? 'Unknown GraphQL error' }}
-          </div>
-        </div>
-      }
-
-      @if (countriesVm().loading && countriesVm().countries.length === 0) {
-        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          @for (i of skeleton(); track i) {
-            <div
-              class="animate-pulse rounded-2xl bg-[var(--app-card)] p-4 shadow-sm ring-1 ring-[var(--app-border)]"
-            >
-              <div class="flex items-start justify-between gap-3">
-                <div class="flex items-center gap-3">
-                  <div
-                    class="size-10 rounded-xl bg-[var(--app-bg)] ring-1 ring-[var(--app-border)]"
-                  ></div>
-                  <div class="space-y-2">
-                    <div class="h-4 w-36 rounded bg-[var(--app-bg)]"></div>
-                    <div class="h-3 w-24 rounded bg-[var(--app-bg)]"></div>
-                  </div>
-                </div>
-                <div
-                  class="h-7 w-14 rounded-full bg-[var(--app-bg)] ring-1 ring-[var(--app-border)]"
-                ></div>
-              </div>
-              <div class="mt-4 grid grid-cols-2 gap-3">
-                <div class="space-y-2">
-                  <div class="h-3 w-12 rounded bg-[var(--app-bg)]"></div>
-                  <div class="h-4 w-24 rounded bg-[var(--app-bg)]"></div>
-                </div>
-                <div class="space-y-2">
-                  <div class="h-3 w-14 rounded bg-[var(--app-bg)]"></div>
-                  <div class="h-4 w-20 rounded bg-[var(--app-bg)]"></div>
-                </div>
-              </div>
-            </div>
-          }
-        </div>
-      } @else {
-        <div class="flex items-center justify-between text-sm text-[var(--app-muted)]">
-          <div>
-            Showing <span class="font-semibold text-[var(--app-fg)]">{{ countries().length }}</span>
-          </div>
-        </div>
-
-        @if (countries().length === 0) {
-          <div
-            class="rounded-2xl bg-[var(--app-card)] p-6 text-sm shadow-sm ring-1 ring-[var(--app-border)]"
-          >
-            <div class="font-semibold">No results</div>
-            <div class="mt-1 text-[var(--app-muted)]">Try clearing your filters.</div>
-          </div>
-        } @else {
-          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            @for (country of countries(); track country.code) {
-              <app-country-card [country]="country" />
-            }
-          </div>
-        }
-      }
-    </section>
-  `,
 })
 export class CountriesPage {
   private readonly repo = inject(CountriesRepository);
@@ -141,9 +43,7 @@ export class CountriesPage {
     initialValue: { loading: true, errors: null, continents: [] } satisfies ContinentsVm,
   });
 
-  readonly continents = computed(() =>
-    this.continentsVm().continents.slice().sort(byNameAsc),
-  );
+  readonly continents = computed(() => this.continentsVm().continents.slice().sort(byNameAsc));
 
   private readonly search$ = toObservable(this.search);
   private readonly continentInitialized = signal(false);

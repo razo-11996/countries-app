@@ -1,0 +1,23 @@
+.map-card {
+  overflow: hidden;
+}
+
+.map-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--app-border);
+}
+
+.map-card__title {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.map-card__canvas {
+  height: 20rem;
+  width: 100%;
+  background: #ffffff;
+}

@@ -1,0 +1,369 @@
+<section class="country-detail">
+  <app-button [routerLink]="'/'" extraClass="country-detail__back">
+    <span aria-hidden="true">←</span>
+    Back
+  </app-button>
+
+  @if (vm().errors?.length) {
+    <div class="card message">
+      <div class="message__title">Couldn’t load country.</div>
+      <div class="message__body text-muted">
+        {{ vm().errors?.[0]?.message ?? 'Unknown GraphQL error' }}
+      </div>
+    </div>
+  }
+
+  @if (vm().loading && !vm().country) {
+    <div class="card skeleton-detail">
+      <div class="skeleton skeleton-detail__title"></div>
+      <div class="skeleton skeleton-detail__subtitle"></div>
+      <div class="skeleton-detail__grid">
+        @for (i of skeleton(); track i) {
+          <div class="skeleton skeleton-detail__row"></div>
+        }
+      </div>
+    </div>
+  } @else if (vm().country) {
+    <div class="card country-detail-card">
+      <header class="country-detail-card__header">
+        <div class="country-detail-card__emoji" aria-hidden="true">{{ vm().country!.emoji }}</div>
+        <div class="country-detail-card__header-text">
+          <h1>{{ vm().country!.name }}</h1>
+          <div class="text-muted">
+            {{ vm().country!.code }} · {{ vm().country!.continent.name }}
+          </div>
+        </div>
+      </header>
+
+      <dl class="facts">
+        <div>
+          <dt class="text-muted">Native name</dt>
+          <dd>{{ vm().country!.native }}</dd>
+        </div>
+        <div>
+          <dt class="text-muted">Capital</dt>
+          <dd>{{ vm().country!.capital ?? '—' }}</dd>
+        </div>
+        <div>
+          <dt class="text-muted">Currencies</dt>
+          <dd>
+            @if (vm().country!.currencies.length) {
+              {{ vm().country!.currencies.join(', ') }}
+            } @else {
+              {{ vm().country!.currency ?? '—' }}
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class="text-muted">Calling code</dt>
+          <dd>
+            @if (vm().country!.phones.length) {
+              +{{ vm().country!.phones.join(', +') }}
+            } @else if (vm().country!.phone) {
+              +{{ vm().country!.phone }}
+            } @else {
+              —
+            }
+          </dd>
+        </div>
+        <div>
+          <dt class="text-muted">AWS region</dt>
+          <dd>{{ vm().country!.awsRegion || '—' }}</dd>
+        </div>
+        <div class="facts__full">
+          <dt class="text-muted">Languages</dt>
+          <dd class="badge-list">
+            @for (l of languages(); track l.code) {
+              <span class="badge"
+                >{{ l.name }} <span class="text-muted">({{ l.code }})</span></span
+              >
+            } @empty {
+              <span class="text-muted">—</span>
+            }
+          </dd>
+        </div>
+      </dl>
+
+      <div class="panels">
+        <div class="panels__col">
+          @if (coordsVm().loading) {
+            <div class="card skeleton-map">
+              <div class="skeleton skeleton-map__bar"></div>
+              <div class="skeleton skeleton-map__body"></div>
+            </div>
+          } @else if (coordsVm().coords) {
+            <app-leaflet-map
+              [title]="'Map of ' + vm().country!.name"
+              [lat]="coordsVm().coords!.lat"
+              [lon]="coordsVm().coords!.lon"
+              [zoom]="5"
+            />
+          } @else {
+            <div class="card message">
+              <div class="message__title">Map</div>
+              <div class="message__body text-muted">
+                Coordinates are unavailable for this country.
+              </div>
+            </div>
+          }
+
+          @if (coordsVm().error) {
+            <div class="text-muted text-sm">Map data error: {{ coordsVm().error }}</div>
+          }
+        </div>
+
+        <div class="panels__col">
+          <div class="card weather">
+            <div class="weather__header">
+              <div class="weather__title">
+                <span>Weather (current)</span>
+                @if (weatherBadge(); as b) {
+                  <span class="badge">
+                    @switch (b.icon) {
+                      @case ('sun') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <circle cx="12" cy="12" r="4" />
+                          <path d="M12 2v2" />
+                          <path d="M12 20v2" />
+                          <path d="M4.93 4.93l1.41 1.41" />
+                          <path d="M17.66 17.66l1.41 1.41" />
+                          <path d="M2 12h2" />
+                          <path d="M20 12h2" />
+                          <path d="M4.93 19.07l1.41-1.41" />
+                          <path d="M17.66 6.34l1.41-1.41" />
+                        </svg>
+                      }
+                      @case ('cloud-sun') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M12 3a4 4 0 0 0-4 4" />
+                          <path d="M3 16a4 4 0 0 0 4 4h10a4 4 0 0 0 .5-7.97" />
+                          <path d="M16 11.5A4.5 4.5 0 0 0 7.5 10" />
+                        </svg>
+                      }
+                      @case ('cloud') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M17.5 19a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6 9a4 4 0 0 0 1 7.87" />
+                          <path d="M7 16h10" />
+                        </svg>
+                      }
+                      @case ('fog') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M3 15h18" />
+                          <path d="M5 11h14" />
+                          <path d="M7 19h10" />
+                        </svg>
+                      }
+                      @case ('rain') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M7 18a4 4 0 0 1 1-7.87A6 6 0 0 1 18 11.5" />
+                          <path d="M8 19l-1 2" />
+                          <path d="M12 19l-1 2" />
+                          <path d="M16 19l-1 2" />
+                        </svg>
+                      }
+                      @case ('snow') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M12 2v20" />
+                          <path d="M4.5 7.5l15 9" />
+                          <path d="M19.5 7.5l-15 9" />
+                        </svg>
+                      }
+                      @case ('storm') {
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M17.5 18a4.5 4.5 0 0 0 .5-8.97A6 6 0 0 0 6 8.5" />
+                          <path d="M13 13l-3 6h4l-2 4" />
+                        </svg>
+                      }
+                    }
+                    <span>{{ b.label }}</span>
+                    <span class="text-muted">{{ b.dayLabel }}</span>
+                  </span>
+                }
+              </div>
+
+              <a
+                class="link text-muted"
+                href="https://open-meteo.com/"
+                target="_blank"
+                rel="noopener"
+                >Source</a
+              >
+            </div>
+
+            <div class="weather__body">
+              @if (weatherVm().loading) {
+                <div class="weather__loading">
+                  <div class="skeleton weather__line"></div>
+                  <div class="skeleton weather__line"></div>
+                </div>
+              } @else if (weatherVm().current) {
+                <dl class="weather__grid">
+                  <div>
+                    <dt class="text-muted weather__label">
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        class="icon"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M14 14.76V5a2 2 0 0 0-4 0v9.76a4 4 0 1 0 4 0Z" />
+                        <path d="M10 11h4" />
+                      </svg>
+                      Temperature
+                    </dt>
+                    <dd>{{ weatherVm().current!.temperatureC.toFixed(1) }}°C</dd>
+                  </div>
+                  <div>
+                    <dt class="text-muted weather__label">
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        class="icon"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M3 8h10a3 3 0 1 0-3-3" />
+                        <path d="M3 12h15a3 3 0 1 1-3 3" />
+                        <path d="M3 16h8" />
+                      </svg>
+                      Wind
+                    </dt>
+                    <dd class="weather__wind">
+                      <span>{{ weatherVm().current!.windSpeedKmh.toFixed(0) }} km/h</span>
+                      <span class="text-muted">·</span>
+                      <span class="weather__winddir">
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          class="icon icon--muted"
+                          fill="currentColor"
+                          [style.transform]="windMeta().rotate"
+                        >
+                          <path d="M12 2l4.5 10h-9L12 2z" />
+                        </svg>
+                        <span>{{ windMeta().compass }} ({{ windMeta().deg }}°)</span>
+                      </span>
+                    </dd>
+                  </div>
+                  <div class="weather__full">
+                    <dt class="text-muted weather__label">
+                      <svg
+                        aria-hidden="true"
+                        viewBox="0 0 24 24"
+                        class="icon"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7v6l4 2" />
+                      </svg>
+                      Time
+                    </dt>
+                    <dd>{{ weatherTimeLabel() }}</dd>
+                  </div>
+                </dl>
+              } @else {
+                <div class="text-muted">
+                  Weather is unavailable (missing coordinates or provider didn’t return data).
+                </div>
+              }
+            </div>
+          </div>
+
+          @if (weatherVm().error) {
+            <div class="text-muted text-sm">Weather data error: {{ weatherVm().error }}</div>
+          }
+        </div>
+      </div>
+
+      @if (states().length) {
+        <div class="states">
+          <div class="states__title">States</div>
+          <div class="states__chips">
+            @for (s of states(); track s.code ?? s.name) {
+              <span class="badge">{{ s.name }}</span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="card message">
+      <div class="message__title">Country not found</div>
+      <div class="message__body text-muted">That code doesn’t match a country in the API.</div>
+    </div>
+  }
+</section>

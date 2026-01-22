@@ -23,4 +23,3 @@ export type CountryVm = {
   errors: readonly GqlErrorLike[] | null;
   country: CountryDetails | null;
 };
-

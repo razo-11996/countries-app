@@ -9,6 +9,8 @@
     "test": "ng test",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "serve:ssr:countries-app": "node dist/countries-app/server/server.mjs"
   },
   "prettier": {
@@ -39,6 +41,7 @@
     "express": "^5.1.0",
     "graphql": "16.12.0",
     "leaflet": "1.9.4",
+    "moment": "^2.30.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -50,13 +53,12 @@
     "@graphql-codegen/typescript": "5.0.7",
     "@graphql-codegen/typescript-apollo-angular": "4.0.1",
     "@graphql-codegen/typescript-operations": "5.0.7",
-    "@tailwindcss/postcss": "^4.1.12",
     "@types/express": "^5.0.1",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20.17.19",
     "jsdom": "^27.1.0",
     "postcss": "^8.5.3",
-    "tailwindcss": "^4.1.12",
+    "prettier": "^3.8.1",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
   }
